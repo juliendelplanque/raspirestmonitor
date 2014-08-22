@@ -13,7 +13,7 @@ def get_temperature():
     proc = subprocess.Popen(["/opt/vc/bin/vcgencmd measure_temp"], stdout=subprocess.PIPE, shell=True)
     (temperature, error) = proc.communicate()
     temperature = temperature.decode("utf-8").split("=")[1]
-    return float(temperature[0:len(temperature)-2])
+    return float(temperature[0:len(temperature)-3])
 
 def get_voltage(id: str):
     """ Get the voltage of the component with the id "id" and return it as a
