@@ -3,8 +3,11 @@ Raspi REST monitor
 
 Simply a REST server and a REST client to monitor package updates needed, temperature and voltage of your raspberry-pi.
 
+Currently only work on for raspberry-pi running Archlinux.
+
 TODO:
 - Implement login on both server and client side.
+- Support other distribs
 - Add more interfaces
 
 Installation:
