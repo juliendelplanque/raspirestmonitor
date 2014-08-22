@@ -6,9 +6,11 @@
 import http.client
 import json
 
-def get_pacman_pkgs_to_update(ip: str, username: str, passwd: str):
+def get_pacman_pkgs_to_update(ip: str, username: str=None, passwd: str=None):
     """ Get the list of packages from the REST server hosted by
         the raspberry pi.
+
+        TODO implement login.
 
         Keyword arguments:
         ip       - the ip of the raspberry pi
@@ -21,10 +23,12 @@ def get_pacman_pkgs_to_update(ip: str, username: str, passwd: str):
     j = json.loads(response.read().decode("utf-8"))
     return j.get("pacman")
 
-def get_sensors_data(ip: str, username: str, passwd: str):
+def get_sensors_data(ip: str, username: str=None, passwd: str=None):
     """ Get the list of sensors data from the REST server hosted by
         the raspberry pi.
 
+        TODO implement login.
+        
         Keyword arguments:
         ip       - the ip of the raspberry pi
         username - your username
