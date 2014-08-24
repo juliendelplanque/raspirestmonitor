@@ -25,7 +25,7 @@ def get_voltage(id: str):
     proc = subprocess.Popen(["/opt/vc/bin/vcgencmd measure_volts "+id], stdout=subprocess.PIPE, shell=True)
     (voltage, error) = proc.communicate()
     voltage = voltage.decode("utf-8").split("=")[1]
-    return float(voltage[0:len(voltage)-1])
+    return float(voltage[0:len(voltage)-2])
 
 def get_core_voltage():
     """ Return the "core" voltage of the raspberry pi.
