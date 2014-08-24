@@ -6,12 +6,25 @@
 """
 import subprocess
 from flask import Flask, jsonify
+from flask.ext.httpauth import HTTPBasicAuth
 import sensors
 import pkgmanagers
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+@auth.get_password
+def get_password(username):
+    if username == 'admin':
+        return 'admin'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return jsonify( { 'error': 'Unauthorized access' } )
 
 @app.route('/pkgtoupdate', methods = ['GET'])
+@auth.login_required
 def pkg_to_update():
     """ Return a json object containing the packages to update.
     """
@@ -29,6 +42,7 @@ def pkg_to_update():
     return jsonify(dic)
 
 @app.route('/sensors', methods = ['GET'])
+@auth.login_required
 def sensors_data():
     """ Return a json object containing the sensors and their data.
     """
