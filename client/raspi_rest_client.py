@@ -6,6 +6,9 @@
 import requests
 import json
 
+class UnknownUserException(Exception):
+    pass
+
 def get_pkgs_to_update(ip: str, port: int, username: str, passwd: str):
     """ Get the list of packages from the REST server hosted by
         the raspberry pi.
@@ -17,7 +20,8 @@ def get_pkgs_to_update(ip: str, port: int, username: str, passwd: str):
     """
     url = "http://"+ip+":"+str(port)+"/pkgtoupdate"
     response = requests.get(url, auth=(username, passwd))
-    # TODO check if everything went ok
+    if response.status_code == 401:
+        raise UnknownUserException()
     return json.loads(response.text)
 
 def extract_pacman_pkgs_to_update(json: dict):
