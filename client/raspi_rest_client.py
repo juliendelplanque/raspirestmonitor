@@ -9,20 +9,32 @@ import json
 class UnknownUserException(Exception):
     pass
 
-def get_pkgs_to_update(ip: str, port: int, username: str, passwd: str):
-    """ Get the list of packages from the REST server hosted by
-        the raspberry pi.
+def make_request(ip: str, port: int, username: str, passwd: str, service: str):
+    """ Make a request to the specified service of the server.
 
         Keyword arguments:
         ip       - the ip of the raspberry pi
         username - your username
         passwd   - your password
+        service  - the service you want to contact
     """
-    url = "http://"+ip+":"+str(port)+"/pkgtoupdate"
+    url = "http://"+ip+":"+str(port)+"/"+service
     response = requests.get(url, auth=(username, passwd))
     if response.status_code == 401:
         raise UnknownUserException()
     return json.loads(response.text)
+
+def get_pkgs_to_update(ip: str, port: int, username: str, password: str):
+    """ Get the list of packages from the REST server hosted by
+        the raspberry pi.
+
+        Keyword arguments:
+        ip       - the ip of the raspberry pi
+        port     - the port the server is listening to
+        username - your username
+        password - your password
+    """
+    return make_request(ip, port, username, password, "pkgtoupdate")
 
 def extract_pacman_pkgs_to_update(json: dict):
     """ Extract the list of pacman's packages from the json passed in parameters.
@@ -40,18 +52,25 @@ def extract_yaourt_pkgs_to_update(json: dict):
     """
     return json.get('yaourt')
 
-def get_sensors_data(ip: str, port: int, username: str=None, passwd: str=None):
+def get_sensors_data(ip: str, port: int, username: str, password: str):
     """ Get the list of sensors data from the REST server hosted by
         the raspberry pi.
 
-        TODO implement login.
+        Keyword arguments:
+        ip       - the ip of the raspberry pi
+        port     - the port the server is listening to
+        username - your username
+        password - your password
+    """
+    return make_request(ip, port, username, password, "sensors")
+
+def get_system_info(ip: str, port: int, username: str, password: str):
+    """ Get system information from the REST server hosted by the raspberry pi.
 
         Keyword arguments:
         ip       - the ip of the raspberry pi
+        port     - the port the server is listening to
         username - your username
-        passwd   - your password
+        password - your password
     """
-    url = "http://"+ip+":"+str(port)+"/sensors"
-    response = requests.get(url, auth=(username, passwd))
-    # TODO check if everything went ok
-    return json.loads(response.text)
+    return make_request(ip, port, username, password, "systeminfo")
