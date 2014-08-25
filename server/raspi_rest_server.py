@@ -5,7 +5,7 @@
     Author: Julien Delplanque
 """
 import subprocess
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 from flask.ext.httpauth import HTTPBasicAuth
 import sensors
 import pkgmanagers
@@ -21,7 +21,7 @@ def get_password(username):
 
 @auth.error_handler
 def unauthorized():
-    return jsonify( { 'error': 'Unauthorized access' } )
+    return Response("You are not authorized to access this resource.", 401)
 
 @app.route('/pkgtoupdate', methods = ['GET'])
 @auth.login_required
