@@ -1,57 +1,53 @@
 #!/bin/python3
 """ This script contains functions for the REST client.
-    
+
     Author: Julien Delplanque
 """
-import http.client
+import requests
 import json
 
-def get_pacman_pkgs_to_update(ip: str, username: str=None, passwd: str=None):
+def get_pkgs_to_update(ip: str, port: int, username: str, passwd: str):
     """ Get the list of packages from the REST server hosted by
         the raspberry pi.
-
-        TODO implement login.
 
         Keyword arguments:
         ip       - the ip of the raspberry pi
         username - your username
         passwd   - your password
     """
-    conn = http.client.HTTPConnection(ip+":5000")
-    conn.request("GET", "/pkgtoupdate")
-    response = conn.getresponse()
-    j = json.loads(response.read().decode("utf-8"))
-    return j.get("pacman")
+    url = "http://"+ip+":"+str(port)+"/pkgtoupdate"
+    response = requests.get(url, auth=(username, passwd))
+    # TODO check if everything went ok
+    return json.loads(response.text)
 
-def get_yaourt_pkgs_to_update(ip: str, username: str=None, passwd: str=None):
-    """ Get the list of packages from the REST server hosted by
-        the raspberry pi.
-
-        TODO implement login.
+def extract_pacman_pkgs_to_update(json: dict):
+    """ Extract the list of pacman's packages from the json passed in parameters.
 
         Keyword arguments:
-        ip       - the ip of the raspberry pi
-        username - your username
-        passwd   - your password
+        json - a dict that represent the json
     """
-    conn = http.client.HTTPConnection(ip+":5000")
-    conn.request("GET", "/pkgtoupdate")
-    response = conn.getresponse()
-    j = json.loads(response.read().decode("utf-8"))
-    return j.get("yaourt")
+    return json.get('pacman')
 
-def get_sensors_data(ip: str, username: str=None, passwd: str=None):
+def extract_yaourt_pkgs_to_update(json: dict):
+    """ Extract the list of yaourt's packages from the json passed in parameters.
+
+        Keyword arguments:
+        json - a dict that represent the json
+    """
+    return json.get('yaourt')
+
+def get_sensors_data(ip: str, port: int, username: str=None, passwd: str=None):
     """ Get the list of sensors data from the REST server hosted by
         the raspberry pi.
 
         TODO implement login.
-        
+
         Keyword arguments:
         ip       - the ip of the raspberry pi
         username - your username
         passwd   - your password
     """
-    conn = http.client.HTTPConnection(ip+":5000")
-    conn.request("GET", "/sensors")
-    response = conn.getresponse()
-    return json.loads(response.read().decode("utf-8"))
+    url = "http://"+ip+":"+str(port)+"/sensors"
+    response = requests.get(url, auth=(username, passwd))
+    # TODO check if everything went ok
+    return json.loads(response.text)

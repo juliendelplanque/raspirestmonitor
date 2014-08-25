@@ -28,9 +28,13 @@ def format_message(pkgs: list):
 def main():
     """ Main function of this program.
     """
-    pkgs_to_update = get_pacman_pkgs_to_update("192.168.0.10")
-    if len(pkgs_to_update) > 0:
-        message = format_message(pkgs_to_update)
+    up_json = get_pkgs_to_update("192.168.0.10", 5000, "admin", "admin")
+    pacman_pkgs_to_update = extract_pacman_pkgs_to_update(up_json)
+    yaourt_pkgs_to_update = extract_yaourt_pkgs_to_update(up_json)
+    s_json = get_sensors_data("192.168.0.10", 5000, "admin", "admin")
+    print(s_json)
+    if len(pacman_pkgs_to_update) > 0:
+        message = format_message(pacman_pkgs_to_update)
         Notify.init("Raspi updates")
         notification = Notify.Notification.new("Raspi updates", message)
         notification.show()
