@@ -9,6 +9,7 @@ from flask import Flask, jsonify, Response
 from flask.ext.httpauth import HTTPBasicAuth
 import sensors
 import pkgmanagers
+import systeminfo
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -51,6 +52,13 @@ def sensors_data():
                     'sdram_core_voltage': sensors.get_sdram_core_voltage(),
                     'sdram_io_voltage': sensors.get_sdram_io_voltage(),
                     'sdram_physical_voltage': sensors.get_sdram_physical_voltage()})
+
+@app.route('/systeminfo', methods = ['GET'])
+@auth.login_required
+def system_info():
+    """ Return a json object containing various informations about the system.
+    """
+    return jsonify({'uptime': systeminfo.get_uptime()})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
