@@ -6,9 +6,11 @@ Simply a REST server and a REST client to monitor package updates needed, temper
 Currently only work on for raspberry-pi running Archlinux.
 
 TODO:
-- Implement login on both server and client side.
+- ~~Implement login on both server and client side~~
+- Manage requests errors
 - Support other distribs
 - Add more interfaces
+- Rewrite client using object-oriented paradigm
 
 Installation:
 ============
@@ -26,7 +28,7 @@ pacman -S python-pip
 pip install Flask
 ~~~
 - Clone the repository
-- Launch the server with python3: 
+- Launch the server with python3:
 ~~~
 /bin/python3 raspirestmonitor/server/raspi_rest_server.py
 ~~~
@@ -37,9 +39,9 @@ pip install Flask
 ~~~
 pacman -S python-pip
 ~~~
-- Install flask using pip
+- Install requests using pip
 ~~~
-pip install Flask
+pip install requests
 ~~~
 - Clone the repository
 - Launch an interface with python3:
