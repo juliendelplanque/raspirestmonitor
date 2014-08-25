@@ -58,7 +58,8 @@ def sensors_data():
 def system_info():
     """ Return a json object containing various informations about the system.
     """
-    return jsonify({'uptime': systeminfo.get_uptime()})
+    return jsonify({'uptime': str(systeminfo.get_uptime()),
+                    'idletime': str(systeminfo.get_idletime())})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
