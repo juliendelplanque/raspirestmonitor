@@ -4,12 +4,28 @@
     Author: Julien Delplanque
 """
 import subprocess
+from datetime import timedelta
 
 def get_uptime():
-    """ Return the uptime of the system as a str using the command: $ uptime
+    """ Return the uptime of the system as a timedelta object.
     """
-    proc = subprocess.Popen(["uptime"], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(["cat /proc/uptime"],
+                            stdout=subprocess.PIPE, shell=True)
     (output, error) = proc.communicate()
-    uptime = output.decode("utf-8").split(",")[0]
-    uptime = uptime[uptime.find("up")+3:len(uptime)] # extract uptime
-    return uptime
+    uptime = int(output.decode("utf-8").split()[0].split(".")[0])
+    s = uptime % 60
+    m = int((uptime/60) % 60)
+    h = int((uptime/(60*60) % 24))
+    return timedelta(hours=h, minutes=m, seconds=s)
+
+def get_idletime():
+    """ Return the idle time of the system as a timedelta object.
+    """
+    proc = subprocess.Popen(["cat /proc/uptime"],
+                            stdout=subprocess.PIPE, shell=True)
+    (output, error) = proc.communicate()
+    idletime = int(output.decode("utf-8").split()[1].split(".")[0])
+    s = idletime % 60
+    m = int((idletime/60) % 60)
+    h = int((idletime/(60*60) % 24))
+    return timedelta(hours=h, minutes=m, seconds=s)
