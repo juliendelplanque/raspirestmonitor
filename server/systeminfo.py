@@ -10,6 +10,6 @@ def get_uptime():
     """
     proc = subprocess.Popen(["uptime"], stdout=subprocess.PIPE, shell=True)
     (output, error) = proc.communicate()
-    uptime = output.decode("utf-8").split()[2]
-    uptime = uptime[0:len(uptime)-2] # remove the comma
+    uptime = output.decode("utf-8").split(",")[0]
+    uptime = uptime[uptime.find("up")+3:len(uptime)] # extract uptime
     return uptime
