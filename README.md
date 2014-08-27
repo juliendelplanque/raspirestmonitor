@@ -12,6 +12,8 @@ TODO:
 - Manage requests errors
 - Support other distribs
 - Add more interfaces
+- Create a setup script that configure the server
+- Find a way to manage and save securely passwords on the server
 
 Installation:
 ============
