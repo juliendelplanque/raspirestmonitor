@@ -31,13 +31,22 @@ def get_idletime():
     h = int((idletime/(60*60) % 24))
     return timedelta(hours=h, minutes=m, seconds=s)
 
+def get_total_ram():
+    proc = subprocess.Popen(["cat /proc/meminfo"],
+                            stdout=subprocess.PIPE, shell=True)
+    (output, error) = proc.communicate()
+    ram_info = output.decode("utf-8").split("\n")
+    return int(ram_info[0].split()[1])
+
 def get_free_ram():
-    #TODO
-    pass
+    proc = subprocess.Popen(["cat /proc/meminfo"],
+                            stdout=subprocess.PIPE, shell=True)
+    (output, error) = proc.communicate()
+    ram_info = output.decode("utf-8").split("\n")
+    return int(ram_info[1].split()[1])
 
 def get_used_ram():
-    #TODO
-    pass
+    return get_total_ram() - get_free_ram()
 
 def get_kernel_version():
     proc = subprocess.Popen(["cat /proc/version"],
