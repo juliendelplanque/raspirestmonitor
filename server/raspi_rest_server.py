@@ -59,7 +59,12 @@ def system_info():
     """ Return a json object containing various informations about the system.
     """
     return jsonify({'uptime': str(systeminfo.get_uptime()),
-                    'idletime': str(systeminfo.get_idletime())})
+                    'idletime': str(systeminfo.get_idletime()),
+                    'total_ram': systeminfo.get_total_ram(),
+                    'free_ram': systeminfo.get_free_ram(),
+                    'used_ram': systeminfo.get_used_ram(),
+                    'kernel_version': systeminfo.get_kernel_version(),
+                    'kernel_build_date': systeminfo.get_build_date()})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
