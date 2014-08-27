@@ -32,7 +32,7 @@ def get_idletime():
     return timedelta(hours=h, minutes=m, seconds=s)
 
 def get_total_ram():
-    """ Return the total amount of ram of the system as an integer.
+    """ Return the total amount of ram of the system in kB as an integer.
     """
     proc = subprocess.Popen(["cat /proc/meminfo"],
                             stdout=subprocess.PIPE, shell=True)
@@ -41,7 +41,7 @@ def get_total_ram():
     return int(ram_info[0].split()[1])
 
 def get_free_ram():
-    """ Return the amount of free ram of the system as an integer.
+    """ Return the amount of free ram of the system in kB as an integer.
     """
     proc = subprocess.Popen(["cat /proc/meminfo"],
                             stdout=subprocess.PIPE, shell=True)
@@ -50,7 +50,7 @@ def get_free_ram():
     return int(ram_info[1].split()[1])
 
 def get_used_ram():
-    """ Return the amount of used ram on the system as an integer
+    """ Return the amount of used ram on the system in kB as an integer.
     """
     return get_total_ram() - get_free_ram()
 
