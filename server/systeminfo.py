@@ -32,6 +32,8 @@ def get_idletime():
     return timedelta(hours=h, minutes=m, seconds=s)
 
 def get_total_ram():
+    """ Return the total amount of ram of the system as an integer.
+    """
     proc = subprocess.Popen(["cat /proc/meminfo"],
                             stdout=subprocess.PIPE, shell=True)
     (output, error) = proc.communicate()
@@ -39,6 +41,8 @@ def get_total_ram():
     return int(ram_info[0].split()[1])
 
 def get_free_ram():
+    """ Return the amount of free ram of the system as an integer.
+    """
     proc = subprocess.Popen(["cat /proc/meminfo"],
                             stdout=subprocess.PIPE, shell=True)
     (output, error) = proc.communicate()
@@ -46,9 +50,13 @@ def get_free_ram():
     return int(ram_info[1].split()[1])
 
 def get_used_ram():
+    """ Return the amount of used ram on the system as an integer
+    """
     return get_total_ram() - get_free_ram()
 
 def get_kernel_version():
+    """ Return a str containing the kernel version.
+    """
     proc = subprocess.Popen(["cat /proc/version"],
                             stdout=subprocess.PIPE, shell=True)
     (output, error) = proc.communicate()
@@ -56,6 +64,8 @@ def get_kernel_version():
     return version
 
 def get_kernel_build_date():
+    """ Return a str containing the kernel's build date.
+    """
     proc = subprocess.Popen(["cat /proc/version"],
                             stdout=subprocess.PIPE, shell=True)
     (output, error) = proc.communicate()
