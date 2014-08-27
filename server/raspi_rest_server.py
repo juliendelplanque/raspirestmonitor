@@ -64,7 +64,7 @@ def system_info():
                     'free_ram': systeminfo.get_free_ram(),
                     'used_ram': systeminfo.get_used_ram(),
                     'kernel_version': systeminfo.get_kernel_version(),
-                    'kernel_build_date': systeminfo.get_build_date()})
+                    'kernel_build_date': systeminfo.get_kernel_build_date()})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
