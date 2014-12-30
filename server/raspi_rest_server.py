@@ -10,15 +10,15 @@ from flask.ext.httpauth import HTTPBasicAuth
 import sensors
 import pkgmanagers
 import systeminfo
+from passwordmanagement import PasswordManager
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
+password_manager = PasswordManager(".raspirestpass")
 
-@auth.get_password
-def get_password(username):
-    if username == 'admin':
-        return 'admin'
-    return None
+@auth.verify_password
+def verify_password(username, password):
+    password_manager.is_correct(username, password)
 
 @auth.error_handler
 def unauthorized():
@@ -67,4 +67,5 @@ def system_info():
                     'kernel_build_date': systeminfo.get_kernel_build_date()})
 
 if __name__ == '__main__':
+    password_manager.load()
     app.run(host="0.0.0.0")
