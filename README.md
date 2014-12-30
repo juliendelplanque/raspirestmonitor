@@ -8,7 +8,7 @@ Currently only work on for raspberry-pi running Archlinux.
 This program is really young, it will be improved by the time ;)
 
 TODO:
-- ~~Implement login on both server and client side~~
+- Implement login on both server and client side
 - Manage requests errors
 - Support other distribs
 - Add more interfaces
