@@ -34,7 +34,7 @@ class PasswordManager(object):
             username - the username as a string
             password - the password as a string
         """
-        self.password_dic[username] = bcrypt.hashpw(password, bcrypt.gensalt())
+        self.password_dic[username] = str(bcrypt.hashpw(password, bcrypt.gensalt()))
 
     def is_correct(self, username: str, password: str):
         """ Determinate if a couple of username, password is correct according
@@ -54,7 +54,7 @@ class PasswordManager(object):
     def write(self):
         """ Write the json in the password file.
         """
-        with open(self.password_file_path, "w") as password_file:
+        with open(self.password_file_path, "w+") as password_file:
             password_file.write(json.dumps(self.password_dic))
 
     def load(self):
