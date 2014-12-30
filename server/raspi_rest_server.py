@@ -33,13 +33,13 @@ def pkg_to_update():
     try:
         pkgs = pkgmanagers.pacman_packages_to_update()
         dic['pacman'] = pkgs
-    except:
-        pass
+    except Exception as e:
+        print(e
     try:
         pkgs = pkgmanagers.yaourt_packages_to_update()
         dic['yaourt'] = pkgs
-    except:
-        pass
+    except Exception e:
+        print(e)
     return jsonify(dic)
 
 @app.route('/sensors', methods = ['GET'])
