@@ -25,7 +25,7 @@ def unauthorized():
     return Response("You are not authorized to access this resource.", 401)
 
 @app.route('/pkgtoupdate', methods = ['GET'])
-@auth.login_required
+# @auth.login_required
 def pkg_to_update():
     """ Return a json object containing the packages to update.
     """
@@ -43,7 +43,7 @@ def pkg_to_update():
     return jsonify(dic)
 
 @app.route('/sensors', methods = ['GET'])
-@auth.login_required
+# @auth.login_required
 def sensors_data():
     """ Return a json object containing the sensors and their data.
     """
@@ -54,7 +54,7 @@ def sensors_data():
                     'sdram_physical_voltage': sensors.get_sdram_physical_voltage()})
 
 @app.route('/systeminfo', methods = ['GET'])
-@auth.login_required
+# @auth.login_required
 def system_info():
     """ Return a json object containing various informations about the system.
     """
