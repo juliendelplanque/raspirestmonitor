@@ -34,7 +34,7 @@ def pkg_to_update():
         pkgs = pkgmanagers.pacman_packages_to_update()
         dic['pacman'] = pkgs
     except Exception as e:
-        print(e
+        print(e)
     try:
         pkgs = pkgmanagers.yaourt_packages_to_update()
         dic['yaourt'] = pkgs
