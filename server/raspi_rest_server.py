@@ -38,7 +38,7 @@ def pkg_to_update():
     try:
         pkgs = pkgmanagers.yaourt_packages_to_update()
         dic['yaourt'] = pkgs
-    except Exception e:
+    except Exception as e:
         print(e)
     return jsonify(dic)
 
