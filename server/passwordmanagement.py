@@ -1,4 +1,5 @@
 #!/bin/python3
+# -*- coding: utf-8 -*-
 """ This script contains the class PasswordManager that is usefull for password
     secure storage.
     This article has been usefull to write this script:
@@ -44,10 +45,13 @@ class PasswordManager(object):
             username - the username as a string
             password - the password as a string
         """
-        if username in self.password_dic.keys():
+        if username in list(self.password_dic.keys()):
             expected_digest = self.password_dic[username]
-            digest = bcrypt.hashpw(password, self.password_dic[username])
-            if digest == expected_digest:
+            password_bytes = password.encode("utf-8")
+            salt_bytes = self.password_dic[username].encode("utf-8")
+            digest = bcrypt.hashpw(password_bytes, salt_bytes)
+            # Here the decode is raspberry-pi specific
+            if digest.decode("utf-8") == expected_digest:
                 return True
         return False
 
@@ -63,3 +67,6 @@ class PasswordManager(object):
         """
         with open(self.password_file_path, "r") as password_file:
             self.password_dic = json.loads(password_file.read())
+        # These next lines are raspberry-pi specific
+        for key in self.password_dic.keys():
+           self.password_dic[key] = self.password_dic[key][2:len(self.password_dic[key])-1]

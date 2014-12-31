@@ -8,6 +8,7 @@ def main():
     password_manager = PasswordManager(".raspirestpass")
     username = input("Enter the username: ")
     password = getpass.getpass("Enter the password: ")
+    # The password encoding is raspberry-pi specific
     password_manager.add_user(username, password.encode("utf-8"))
     password_manager.write()
 
