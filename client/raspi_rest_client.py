@@ -9,6 +9,9 @@ import json
 class UnknownUserException(Exception):
     pass
 
+class ServerErrorException(Exception):
+    pass
+
 def make_request(ip: str, port: int, username: str, passwd: str, service: str):
     """ Make a request to the specified service of the server.
 
@@ -21,7 +24,9 @@ def make_request(ip: str, port: int, username: str, passwd: str, service: str):
     url = "http://"+ip+":"+str(port)+"/"+service
     response = requests.get(url, auth=(username, passwd))
     if response.status_code == 401:
-        raise UnknownUserException()
+        raise UnknownUserException(response.text)
+    elif response.status_code == 500:
+        raise ServerErrorException(response.text)
     return json.loads(response.text)
 
 def get_pkgs_to_update(ip: str, port: int, username: str, password: str):
