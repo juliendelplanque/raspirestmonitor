@@ -56,6 +56,9 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+    except UnknownUserException as e:
+        print("Auth failed: Either the username isn't known by the server or "+
+            "the password was incorrect.")
     except Exception as e:
         print("The client crashed because of this exception:", type(e).__name__)
         with open(ERROR_FILE, 'w') as error_file:
