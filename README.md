@@ -1,19 +1,25 @@
 Raspi REST monitor
 ================
 
-Simply a REST server and a REST client to monitor package updates needed, temperature and voltage of your raspberry-pi.
+Simply a REST server and a REST client to fetch data from your raspberry pi.
 
-Currently only work on for raspberry-pi running Archlinux.
+Data that the REST API provide now:
+- packages updates needed (only for pacman and yaourt currently)
+- sensors data
+- system info (may not work on other distributions than Archlinux)
+
+If you try this on another distribution, it may or may not work, I didn't
+test it already.
 
 This program is really young, it will be improved by the time ;)
 
 TODO:
-- Implement login on both server and client side
-- Manage requests errors
+- ~~Implement login on both server and client side~~
+- Fully manage requests errors
 - Support other distribs
 - Add more interfaces
 - Create a setup script that configure the server
-- Find a way to manage and save securely passwords on the server
+- ~~Find a way to manage and save securely passwords on the server~~
 
 Installation:
 ============
@@ -46,10 +52,17 @@ pacman -S python-pip
 ~~~
 pip install requests
 ~~~
-- Clone the repository
-- Launch an interface with python3:
+- Install bcrypt
 ~~~
-/bin/python3 raspirestmonitor/client/gnome_notifications_interface.py
+pip install bcrypt
+~~~
+- Clone the repository
+- Launch an interface with python3.
+
+For example, this will output pacman's packages to update and sensors data:
+~~~
+/bin/python3 raspirestmonitor/client/cmd_interface.py --username 'user' --ip-adress '192.168.X.Y:5000' --pacman --sensors
+
 ~~~
 
 Create your own interface!
