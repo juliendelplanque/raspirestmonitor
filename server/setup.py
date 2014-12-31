@@ -1,5 +1,8 @@
 #!/bin/python3
-"""
+""" This script create a file containing a json with usernames as keys
+    and hashed passwords as values.
+
+    Author: Julien Delplanque
 """
 from passwordmanagement import PasswordManager
 import getpass
