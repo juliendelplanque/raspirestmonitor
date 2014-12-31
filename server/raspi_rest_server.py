@@ -33,12 +33,12 @@ def pkg_to_update():
     try:
         pkgs = pkgmanagers.pacman_packages_to_update()
         dic['pacman'] = pkgs
-    except PackageManagerDoesNotExists as e:
+    except pkgmanagers.PackageManagerDoesNotExists as e:
         print(e)
     try:
         pkgs = pkgmanagers.yaourt_packages_to_update()
         dic['yaourt'] = pkgs
-    except PackageManagerDoesNotExists as e:
+    except pkgmanagers.PackageManagerDoesNotExists as e:
         print(e)
     return jsonify(dic)
 
