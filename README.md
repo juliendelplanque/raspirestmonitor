@@ -20,6 +20,7 @@ TODO:
 - Add more interfaces
 - Create a setup script that configure the server
 - ~~Find a way to manage and save securely passwords on the server~~
+- Multi users management with different access.
 
 Installation:
 ============
@@ -37,6 +38,10 @@ pacman -S python-pip
 pip install Flask
 ~~~
 - Clone the repository
+- Setup the username and password (will be asked by this script):
+~~~
+/bin/python3 raspirestmonitor/server/setup.py
+~~~
 - Launch the server with python3:
 ~~~
 /bin/python3 raspirestmonitor/server/raspi_rest_server.py
