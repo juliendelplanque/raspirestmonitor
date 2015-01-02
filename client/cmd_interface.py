@@ -39,12 +39,11 @@ def main():
     ip = args.ip.split(":")[0]
     port = args.ip.split(":")[1]
     password = password = getpass.getpass("Enter the password for "+args.username+": ")
-    up_json = get_pkgs_to_update(ip, port, args.username, password)
     if args.pacman:
-        pacman_pkgs_to_update = extract_pacman_pkgs_to_update(up_json)
+        pacman_pkgs_to_update = get_pacman_pkgs_to_update(ip, port, args.username, password)
         print(pacman_pkgs_to_update)
     if args.yaourt:
-        yaourt_pkgs_to_update = extract_yaourt_pkgs_to_update(up_json)
+        yaourt_pkgs_to_update = get_yaourt_pkgs_to_update(ip, port, args.username, password)
         print(yaourt_pkgs_to_update)
     if args.sensors:
         s_json = get_sensors_data(ip, port, args.username, password)
