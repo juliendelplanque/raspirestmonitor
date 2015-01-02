@@ -25,12 +25,13 @@ def unauthorized():
     return Response("You are not authorized to access this resource.", 401)
 
 def load_routes(app, auth):
+    """ Load dynamically routes in ./routes directory.
+    """
     routes_directories = [d for d in os.listdir("routes") if os.path.isdir(os.path.join("routes", d))]
-    print(routes_directories)
     for route_directory in routes_directories:
         module_path = os.path.join("routes", route_directory, "routes.py")
         if(os.path.exists(module_path)):
-            print("Loading", module_path) # TODO use logging
+            print("Loading", route_directory) # TODO use logging
             module = imp.load_source("./routes", module_path)
             module.create_routes(app, auth)
 
