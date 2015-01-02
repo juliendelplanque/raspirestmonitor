@@ -4,20 +4,22 @@ import routes.pkgmanagers.pkgmanagers as pkgmanagers
 from flask import jsonify
 
 def create_routes(app, auth):
-    @app.route('/pkgtoupdate', methods = ['GET'])
+    @app.route('/pacman', methods = ['GET'])
     @auth.login_required
-    def pkg_to_update():
+    def pacman():
         """ Return a json object containing the packages to update.
         """
-        dic = {}
         try:
             pkgs = pkgmanagers.pacman_packages_to_update()
-            dic['pacman'] = pkgs
-        except pkgmanagers.PackageManagerDoesNotExists as e:
-            print(e)
+            return jsonify(pkgs)
+        except pkgmanagers.PackageManagerDoesNotExists:
+            return jsonify({})
+
+    @app.route('/yaourt', methods = ['GET'])
+    @auth.login_required
+    def yaourt():
         try:
             pkgs = pkgmanagers.yaourt_packages_to_update()
-            dic['yaourt'] = pkgs
-        except pkgmanagers.PackageManagerDoesNotExists as e:
-            print(e)
-        return jsonify(dic)
+            return jsonify(pkgs)
+        except pkgmanagers.PackageManagerDoesNotExists:
+            return jsonify({})
