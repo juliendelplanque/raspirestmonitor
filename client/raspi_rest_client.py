@@ -29,33 +29,21 @@ def make_request(ip: str, port: int, username: str, passwd: str, service: str):
         raise ServerErrorException(response.text)
     return json.loads(response.text)
 
-def get_pkgs_to_update(ip: str, port: int, username: str, password: str):
-    """ Get the list of packages from the REST server hosted by
-        the raspberry pi.
-
-        Keyword arguments:
-        ip       - the ip of the raspberry pi
-        port     - the port the server is listening to
-        username - your username
-        password - your password
-    """
-    return make_request(ip, port, username, password, "pkgtoupdate")
-
-def extract_pacman_pkgs_to_update(json: dict):
+def get_pacman_pkgs_to_update(ip: str, port: int, username: str, password: str):
     """ Extract the list of pacman's packages from the json passed in parameters.
 
         Keyword arguments:
         json - a dict that represent the json
     """
-    return json.get('pacman')
+    return make_request(ip, port, username, password, "pacman")
 
-def extract_yaourt_pkgs_to_update(json: dict):
+def get_yaourt_pkgs_to_update(ip: str, port: int, username: str, password: str):
     """ Extract the list of yaourt's packages from the json passed in parameters.
 
         Keyword arguments:
         json - a dict that represent the json
     """
-    return json.get('yaourt')
+    return make_request(ip, port, username, password, "yaourt")
 
 def get_sensors_data(ip: str, port: int, username: str, password: str):
     """ Get the list of sensors data from the REST server hosted by
