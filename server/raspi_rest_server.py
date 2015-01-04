@@ -33,7 +33,11 @@ def load_routes(app, auth):
         if(os.path.exists(module_path)):
             print("Loading", route_directory) # TODO use logging
             module = imp.load_source("./routes", module_path)
-            module.create_routes(app, auth)
+            try:
+                module.create_routes(app, auth)
+                print("\t", module_path, "loaded successfully.")
+            except:
+                print("\tError in module:", module_path, "aborting.")
 
 if __name__ == '__main__':
     password_manager.load()
